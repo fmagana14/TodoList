@@ -3,6 +3,8 @@ const addButton = document.getElementById('addTask');
 const taskInput = document.getElementById('taskInput'); //grabs the 'input' in html file
 const taskList = document.getElementById('taskList');
 
+loadTask();
+
 function addTask () {
 
   const task = taskInput.value.trim();
@@ -26,7 +28,19 @@ function createTaskElement(task) {
 
   listItem.textContent = task; //this is saying that the text in the li will display as a task
 
+
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Delete';
+  deleteButton.className = 'deleteTask';
+
+
   taskList.appendChild(listItem);
+  listItem.appendChild(deleteButton);
+
+  deleteButton.addEventListener('click', function() {
+      taskList.removeChild(listItem);
+      saveTask();
+  });
 }
 
 //saving task to local storage
@@ -35,8 +49,15 @@ function saveTask() {
   let task = [];
 
   taskList.querySelectorAll('li').forEach(function(item) {
-    task.push(item.textContent.trim());
+    task.push(item.textContent.replace('Delete', ' ').trim());
   });
 
   localStorage.setItem('tasks', JSON.stringify(task))
+}
+
+function loadTask() {
+
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+  tasks.forEach(createTaskElement);
 }

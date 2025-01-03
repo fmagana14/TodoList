@@ -22,5 +22,15 @@ li {
   justify-content: space-between;
   align-items: center;
   background-color: #f7f7f7;
-  
+  padding: 8px;
+  border-radius: 5px;
 }
+
+.deleteTask {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
